@@ -1,0 +1,45 @@
+Algoritmo per la scelta dei cibi
+
+import java.util.*;
+
+class Scratch {
+
+    public static void main(String[] args) {
+        // Definiamo le patologie e i relativi cibi consentiti
+        Map<String, Set<String>> allowedFoods = new HashMap<>();
+        allowedFoods.put("diabete", new HashSet<>(Arrays.asList("sedano", "broccoli")));
+        allowedFoods.put("ipertensione", new HashSet<>(Arrays.asList("zucchero", "pasta")));
+        // Aggiungere qui altre patologie e relative restrizioni
+
+        // Definiamo i cibi vietati per ogni patologia
+        Map<String, Set<String>> forbiddenFoods = new HashMap<>();
+        forbiddenFoods.put("diabete", new HashSet<>(Arrays.asList("zucchero")));
+        forbiddenFoods.put("ipertensione", new HashSet<>(Arrays.asList("pesce")));
+        // Aggiungere qui altre patologie e relative restrizioni
+
+        // Definiamo le patologie del paziente (max 4)
+        List<String> patientRestrictions = Arrays.asList("diabete", "ipertensione");
+
+        // Calcoliamo la lista di cibi consentiti
+        Set<String> allowed = new HashSet<>();
+        for (String restriction : patientRestrictions) {
+            Set<String> foods = allowedFoods.get(restriction);
+            if (foods != null) {
+                allowed.addAll(foods);
+            }
+        }
+        // Rimuoviamo dalla lista i cibi vietati
+        for (String restriction : patientRestrictions) {
+            Set<String> forbidden = forbiddenFoods.get(restriction);
+            if (forbidden != null) {
+                allowed.removeAll(forbidden);
+            }
+        }
+        // Stampiamo la lista di cibi consentiti
+        System.out.println("Cibi consentiti:");
+        for (String food : allowed) {
+            System.out.println("- " + food);
+        }
+    }
+
+}
